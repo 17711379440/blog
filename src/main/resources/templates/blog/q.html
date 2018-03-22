@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/x-icon" th:href="@{../../icons/favicon.ico}"/>
+    <link th:href="@{../../bootstrap-3.3.7-dist/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{../../bootstrap-3.3.7-dist/css/bootstrap-theme.min.css}" rel="stylesheet">
+    <link th:href="@{../../font-awesome-4.7.0-dist/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{../../css/blog/q.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <!--logo部分-->
+    <div class="row logo">
+        <div class="col-md-8">
+            <img id="logo"th:src="@{../../images/logo.png}">
+        </div>
+        <div class="col-md-4">
+            <iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=9" width="500" height="60" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+        </div>
+    </div>
+    <!--导航栏-->
+    <div class="row nav">
+        <div class="col-md-12">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="bgColor"></li>
+                            <li class="nav-brand"><a th:href="@{/blog/home}">首页</a></li>
+                            <li><a href="#">Java </a></li>
+                            <li><a href="#">Link</a></li>
+                            <li><a href="#">Link</a></li>
+                            <li><a href="#">LinkLink</a></li>
+                            <li><a href="#">Link</a></li>
+                            <li><a href="#">Mysql</a></li>
+                        </ul>
+                        <form class="navbar-form navbar-right" th:action="@{/blog/q}" method="get">
+                            <div class="form-group">
+                                <input type="text" id="q" name="q" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="page-header">
+                <h3>博文信息</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="page-header">
+                <h3>文章分类</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-9 ">
+            <div>
+                <img th:src="@{../../images/search_icon.png}">
+                搜索&nbsp;<span style="color:red" th:text="${q}"></span>&nbsp;的结果 &nbsp;(总共搜索到&nbsp;<span  style="color: red" th:text="${resultList.size()}"></span> &nbsp;条记录)
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item" th:if="${resultList.size() > 0}" th:each=" blog : ${resultList}">
+                    <p><a class="title" th:href="@{/blog/detail(id=${blog.id})}" th:text="${blog.title}"></a> </p>
+                    <p><span class="summary" th:utext="${blog.content}"></span> </p>
+                    <p><span class="createDate" th:text="${blog.createDateStr}"></span> </p>
+                </li>
+                <li class="list-group-item" th:if="${isPagination}">
+                    <a th:href="@{/blog/q(pageIndex=${pageIndex -1})}" th:text="上一页"></a>
+                    <a th:href="@{/blog/q(pageIndex=${pageIndex +1})}" th:text="下一页"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3 ">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="list-group" >
+                        <a href="#" class="list-group-item active">
+                            <span class="fa fa-list-ul fa-fw"></span> 日志类别
+                        </a>
+
+                        <a th:href="@{/blog/home(typeId=${blogType.id})}"  class="list-group-item" th:each="blogType : ${session.blogTypeList}" th:text="${blogType.name}"></a>
+
+                        <a href="#" class="list-group-item text-center unfold fa fa-angle-double-up fa-2x"> </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">
+                            <span class="fa fa-calendar "></span> 日期类别
+                        </a>
+                        <a th:href="@{/blog/home(createDateStr=${date.createDateStr})}" class="list-group-item" th:each="date : ${session.dateList}" th:text="${date.createDateStr}" ></a>
+                        <a href="#" class="list-group-item text-center unfold fa fa-angle-double-up fa-2x"> </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">
+                            <i class="fa fa-link fa-fw"></i>&nbsp;友情链接
+                        </a>
+                        <a href="#"  class="list-group-item" th:each="link : ${session.linkList}" th:text="${link.linkName}" th:href="${link.linkUrl}" target="_blank"></a>
+                        <a href="#" class="list-group-item text-center unfold fa fa-angle-double-up fa-2x"> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="scrollTop"></div>
+    <div class="copyright text-center">
+        Copyright © 2014-2018 www.xy39blog.com 版权所有
+    </div>
+</div>
+<script th:src="@{../../js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{../../bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+<script th:src="@{../../js/canvas-nest.min.js}"></script>
+<script th:src="@{../../js/blog/base.js}"></script>
+</body>
+</html>

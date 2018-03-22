@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>博客信息管理</title>
+    <link th:href="@{../../jquery-easyui-1.5.4.2/themes/default/easyui.css}" rel="stylesheet">
+    <link th:href="@{../../jquery-easyui-1.5.4.2/themes/icon.css}" rel="stylesheet">
+</head>
+<body>
+<table id="dg"></table>
+    <div id="tb">
+        <div>
+            <a href="javascript:openBlogModifyTab()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a>
+            <a href="javascript:deleteBlog()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+            <a href="javascript:undoBlog()" class="easyui-linkbutton" iconCls="icon-undo" plain="true">撤销</a>
+        </div>
+        <div>
+            &nbsp;标题：&nbsp;<input type="text" id="s_title" size="20" onkeydown="if(event.keyCode==13) searchBlog()"/>
+            <a href="javascript:searchBlog()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
+        </div>
+    </div>
+    <script th:src="@{../../js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{../../jquery-easyui-1.5.4.2/jquery.easyui.min.js}"></script>
+    <script th:src="@{../../jquery-easyui-1.5.4.2/easyui-lang-zh_CN.js}"></script>
+    <script th:src="@{../../js/admin/blogManager.js}"></script>
+</body>
+</html>

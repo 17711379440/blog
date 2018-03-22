@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.dao.BlogTypeDao">
+    <resultMap id="list" type="BlogType">
+        <id property="id" column="id"/>
+    </resultMap>
+    <select id="getAll" resultMap="list">
+        select id,name from t_type
+    </select>
+    <insert id="add" parameterType="BlogType">
+        insert into t_type values(null,#{name})
+    </insert>
+    <delete id="remove" parameterType="int">
+        delete from t_type where id=#{id} and id not in(select typeId from t_blog)
+    </delete>
+    <update id="update" parameterType="BlogType">
+        update t_type set name=#{name} where id=#{id}
+    </update>
+</mapper>

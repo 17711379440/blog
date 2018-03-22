@@ -1,0 +1,12 @@
+#logo{
+    background: url("../../images/logo.png") no-repeat -50px -5px;
+    width: 600px;
+    height: 86px;
+    float: left;
+}
+.welcomeText{
+    float: right;
+    margin-top: 40px;
+    margin-right: 30px;
+    font-size: 14px;
+}

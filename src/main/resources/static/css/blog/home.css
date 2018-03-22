@@ -1,0 +1,113 @@
+body {
+    background-color: #F5F6F7;
+}
+
+div.logo {
+    position: relative;
+    left: -40px;
+}
+
+#logo {
+    height: 60px;
+}
+
+div.nav {
+    margin-top: 10px;
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 20px 0 20px;
+    border-bottom: 1px solid #d0d0c4;
+}
+
+.blogIntro {
+    margin-bottom: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 1px 2px 0 #E2E2E2;
+}
+
+.data_list {
+    padding-left: 15px;
+}
+
+#scrollTop {
+    background: url("../../images/scrollTop.png") no-repeat right bottom;
+    position: fixed;
+    display: none;
+    bottom: 20px;
+    right: 20px;
+    width: 38px; /* Width of image */
+    height: 38px; /* Height of image */
+}
+
+#scrollTop:hover {
+    cursor: pointer;
+}
+
+.unfold {
+    display: block;
+}
+
+.bgColor {
+    display: none;
+    background-color: #394264;
+    height: 50px;
+    opacity: 0.5;
+}
+
+.nav-brand {
+    font-size: 18px;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.navbar-collapse {
+    padding-left: 0;
+}
+
+.info {
+    text-align: right;
+    padding-top: 20px;
+
+}
+
+.blogInfo {
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+
+.blogInfo .info {
+    margin-bottom: 10px;
+}
+
+.thumbnail {
+    width: 200px;
+    height: 190px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.thumbnail img {
+    max-width: 100%;
+    max-height: 100%;
+    float: left;
+   padding-top: auto;
+    cursor: pointer;
+    transition: all 0.6s;
+    -moz-transition: all 0.6s;  /* 0.6s完成过渡效果 */
+    -webkit-transition: all 0.6s;
+    filter:alpha(Opacity=100);
+    -moz-opacity:1;
+    opacity: 1;
+}
+.thumbnail img:hover{
+    transform: scale(1.1);
+    filter:alpha(Opacity=50);
+    -moz-opacity:0.5;
+    opacity: 0.5;
+
+}
+

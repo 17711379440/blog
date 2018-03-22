@@ -1,0 +1,116 @@
+body {
+    background: #ebebeb;
+    font-family: "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "\9ED1\4F53", Arial, sans-serif;
+    color: #222;
+    font-size: 12px;
+}
+
+#header {
+    /*width: 100%;*/
+    background: #008ead;
+    width: 100%;
+    height: 500px;
+}
+
+#center {
+    width: 500px;
+    height: 300px;
+    margin: 0 auto;
+    border: 1px solid #fff;
+    background-color: #fff;
+    position: relative;
+    bottom: 150px;
+    /*top: 370px;*/
+    /*left: 38%;*/
+}
+.help-block{
+    position: absolute;
+}
+.form-group{
+    margin-bottom: 22px;
+}
+.text-center{
+    margin:0;
+}
+.top {
+    position: absolute;
+    top: -87px;
+    left: 39%;
+    background: url("../../images/tou.png") no-repeat;
+    width: 97px;
+    height: 92px;
+}
+
+.left_hand {
+    position: absolute;
+    top: -15px;
+    z-index: 99999;
+    left: 126px;
+    background: url("../../images/hand.png") no-repeat;
+    width: 30px;
+    height: 20px;
+}
+
+.left_handing {
+    background: url("../../images/left_hand.png") no-repeat;
+    width: 32px;
+    height: 37px;
+    position: absolute;
+    top: -38px;
+    z-index: 99999;
+    left: 205px;
+    /*display: none;*/
+}
+
+.right_hand {
+    position: absolute;
+    top: -15px;
+    z-index: 99999;
+    left: 330px;
+    background: url("../../images/hand.png") no-repeat;
+    height: 20px;
+    width: 30px;
+}
+
+.right_handing {
+    background: url("../../images/right_hand.png") no-repeat;
+    height: 37px;
+    width: 32px;
+    position: absolute;
+    top: -38px;
+    left: 247px;
+    /*display: none;*/
+}
+
+.row {
+    margin: 0 auto;
+    margin-top: 100px;
+}
+
+.loginMsg {
+    color: firebrick;
+}
+
+.rememberPassword{
+    text-align: right;
+    margin: 0;
+}
+input[type=checkbox] {
+    vertical-align: text-bottom;
+    height: 15px;
+    width: 15px;
+    border-radius: 3px;
+}
+
+.rememberStr {
+    margin:0;
+
+}
+
+button {
+    margin:0 0 0 30px;
+}
+
+#footer {
+
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="highlight-9.12.0/styles/androidstudio.css" rel="stylesheet">
+    <!--<script src="js/jquery-3.2.1.min.js"></script>-->
+    <!--<script src="highlight-9.12.0/highlight.pack.js"></script>-->
+    <!--<script>hljs.initHighlightingOnLoad();</script>-->
+    <link href="ueditor-1.4.3.3/third-party/SyntaxHighlighter/shCoreDefault.css" rel="stylesheet">
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap-3.3.7-dist/css/bootstrap-theme.css" rel="stylesheet">
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="ueditor-1.4.3.3/third-party/SyntaxHighlighter/shCore.js"></script>
+    <script>
+        SyntaxHighlighter.all();
+    </script>
+
+
+</head>
+<body>
+<!--<pre class="java">
+    <code >
+        <p>package com.java1234.controller;</p><p><br/></p><p>import java.util.HashMap;</p><p>import java.util.List;</p><p>import java.util.Map;</p><p><br/></p><p>import javax.annotation.Resource;</p><p>import javax.servlet.http.HttpServletRequest;</p><p><br/></p><p>import org.jsoup.Jsoup;</p><p>import org.jsoup.nodes.Document;</p><p>import org.jsoup.nodes.Element;</p><p>import org.jsoup.select.Elements;</p><p>import org.springframework.stereotype.Controller;</p><p>import org.springframework.web.bind.annotation.RequestMapping;</p><p>import org.springframework.web.bind.annotation.RequestParam;</p><p>import org.springframework.web.servlet.ModelAndView;</p><p><br/></p><p>import com.java1234.entity.Blog;</p><p>import com.java1234.entity.PageBean;</p><p>import com.java1234.service.BlogService;</p><p>import com.java1234.util.PageUtil;</p><p>import com.java1234.util.StringUtil;</p><p><br/></p><p>/**</p><p>&nbsp;* 主页Controller</p><p>&nbsp;* @author Administrator</p><p>&nbsp;*</p><p>&nbsp;*/</p><p>@Controller</p><p>//@RequestMapping(&quot;/&quot;)</p><p>public class IndexController {</p><p><br/></p><p><span style="white-space:pre">	</span>@Resource</p><p><span style="white-space:pre">	</span>private BlogService blogService;</p><p><span style="white-space:pre">	</span></p><p><span style="white-space:pre">	</span></p><p><span style="white-space:pre">	</span>/**</p><p><span style="white-space:pre">	</span> * 请求主页</p><p><span style="white-space:pre">	</span> * @return</p><p><span style="white-space:pre">	</span> * @throws Exception</p><p><span style="white-space:pre">	</span> */</p><p><span style="white-space:pre">	</span>@RequestMapping(&quot;/index&quot;)</p><p><span style="white-space:pre">	</span>public ModelAndView index(@RequestParam(value=&quot;page&quot;,required=false)String page,@RequestParam(value=&quot;typeId&quot;,required=false)String typeId,@RequestParam(value=&quot;releaseDateStr&quot;,required=false)String releaseDateStr,HttpServletRequest request)throws Exception{</p><p><span style="white-space:pre">		</span>ModelAndView mav=new ModelAndView();</p><p><span style="white-space:pre">		</span>if(StringUtil.isEmpty(page)){</p><p><span style="white-space:pre">			</span>page=&quot;1&quot;;</p><p><span style="white-space:pre">		</span>}</p><p><span style="white-space:pre">		</span>PageBean pageBean=new PageBean(Integer.parseInt(page),10);</p><p><span style="white-space:pre">		</span>Map&lt;String,Object&gt; map=new HashMap&lt;String,Object&gt;();</p><p><span style="white-space:pre">		</span>map.put(&quot;start&quot;, pageBean.getStart());</p><p><span style="white-space:pre">		</span>map.put(&quot;size&quot;, pageBean.getPageSize());</p><p><span style="white-space:pre">		</span>map.put(&quot;typeId&quot;, typeId);</p><p><span style="white-space:pre">		</span>map.put(&quot;releaseDateStr&quot;, releaseDateStr);</p><p><span style="white-space:pre">		</span>List&lt;Blog&gt; blogList=blogService.list(map);</p><p><span style="white-space:pre">		</span>for(Blog blog:blogList){</p><p><span style="white-space:pre">			</span>List&lt;String&gt; imagesList=blog.getImagesList();</p><p><span style="white-space:pre">			</span>String blogInfo=blog.getContent();</p><p><span style="white-space:pre">			</span>Document doc=Jsoup.parse(blogInfo);</p><p><span style="white-space:pre">			</span>Elements jpgs=doc.select(&quot;img[src$=.jpg]&quot;); //　查找扩展名是jpg的图片</p><p><span style="white-space:pre">			</span>for(int i=0;i&lt;jpgs.size();i++){</p><p><span style="white-space:pre">				</span>Element jpg=jpgs.get(i);</p><p><span style="white-space:pre">				</span>imagesList.add(jpg.toString());</p><p><span style="white-space:pre">				</span>if(i==2){</p><p><span style="white-space:pre">					</span>break;</p><p><span style="white-space:pre">				</span>}</p><p><span style="white-space:pre">			</span>}</p><p><span style="white-space:pre">		</span>}</p><p><span style="white-space:pre">		</span>mav.addObject(&quot;blogList&quot;, blogList);</p><p><span style="white-space:pre">		</span>StringBuffer param=new StringBuffer(); // 查询参数</p><p><span style="white-space:pre">		</span>if(StringUtil.isNotEmpty(typeId)){</p><p><span style="white-space:pre">			</span>param.append(&quot;typeId=&quot;+typeId+&quot;&amp;&quot;);</p><p><span style="white-space:pre">		</span>}</p><p><span style="white-space:pre">		</span>if(StringUtil.isNotEmpty(releaseDateStr)){</p><p><span style="white-space:pre">			</span>param.append(&quot;releaseDateStr=&quot;+releaseDateStr+&quot;&amp;&quot;);</p><p><span style="white-space:pre">		</span>}</p><p><span style="white-space:pre">		</span>mav.addObject(&quot;pageCode&quot;,PageUtil.genPagination(request.getContextPath()+&quot;/index.html&quot;, blogService.getTotal(map), Integer.parseInt(page), 10, param.toString()));</p><p><span style="white-space:pre">		</span>mav.addObject(&quot;mainPage&quot;, &quot;foreground/blog/list.jsp&quot;);</p><p><span style="white-space:pre">		</span>mav.addObject(&quot;pageTitle&quot;,&quot;Java开源博客系统&quot;);</p><p><span style="white-space:pre">		</span>mav.setViewName(&quot;mainTemp&quot;);</p><p><span style="white-space:pre">		</span>return mav;</p><p><span style="white-space:pre">	</span>}</p><p><span style="white-space:pre">	</span></p><p><span style="white-space:pre">	</span>/**</p><p><span style="white-space:pre">	</span> * 源码下载</p><p><span style="white-space:pre">	</span> * @return</p><p><span style="white-space:pre">	</span> * @throws Exception</p><p><span style="white-space:pre">	</span> */</p><p><span style="white-space:pre">	</span>@RequestMapping(&quot;/download&quot;)</p><p><span style="white-space:pre">	</span>public ModelAndView download()throws Exception{</p><p><span style="white-space:pre">		</span>ModelAndView mav=new ModelAndView();</p><p><span style="white-space:pre">		</span>mav.addObject(&quot;mainPage&quot;, &quot;foreground/system/download.jsp&quot;);</p><p><span style="white-space:pre">		</span>mav.addObject(&quot;pageTitle&quot;,&quot;本站源码下载页面_Java开源博客系统&quot;);</p><p><span style="white-space:pre">		</span>mav.setViewName(&quot;mainTemp&quot;);</p><p><span style="white-space:pre">		</span>return mav;</p><p><span style="white-space:pre">	</span>}</p><p>}</p><p><img src="http://localhost//userImages/20180308/1520475863144074980.jpg" title="1520475863144074980.jpg" alt="github.jpg"/></p>
+    </code></pre>-->
+
+<pre class="brush:java;toolbar:false">	@Resource
+	private&nbsp;BloggerService&nbsp;bloggerService;
+
+	/**
+	&nbsp;*&nbsp;用户登录
+	&nbsp;*&nbsp;@param&nbsp;blogger
+	&nbsp;*&nbsp;@param&nbsp;request
+	&nbsp;*&nbsp;@return
+	&nbsp;*/
+	@RequestMapping(&quot;/login&quot;)
+	public&nbsp;String&nbsp;login(Blogger&nbsp;blogger,HttpServletRequest&nbsp;request){
+		Subject&nbsp;subject=SecurityUtils.getSubject();
+		UsernamePasswordToken&nbsp;token=new&nbsp;UsernamePasswordToken(blogger.getUserName(),&nbsp;CryptographyUtil.md5(blogger.getPassword(),&nbsp;&quot;java1234&quot;));
+
+		try{
+			subject.login(token);&nbsp;//&nbsp;登录验证
+			return&nbsp;&quot;redirect:/admin/main.jsp&quot;;
+		}catch(Exception&nbsp;e){
+			e.printStackTrace();
+			request.setAttribute(&quot;blogger&quot;,&nbsp;blogger);
+			request.setAttribute(&quot;errorInfo&quot;,&nbsp;&quot;用户名或密码错误！&quot;);
+			return&nbsp;&quot;login&quot;;
+		}
+
+	}</pre><p><br/></p>
+
+<button type="button">点我</button>
+<script src="js/a.js"></script>
+
+</body>
+</html>

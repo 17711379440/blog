@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.dao.AnswerDao">
+    <resultMap id="list" type="Answer">
+        <id property="id" column="id"/>
+        <association property="comment" column="commentId" javaType="Comment">
+            <id property="id" column="tc_id"/>
+        </association>
+    </resultMap>
+
+    <select id="getAnswersById" resultMap="list">
+        select * from t_answer where commentId=#{id}
+    </select>
+
+    <insert id="add" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+        insert into t_answer values(null,#{comment.id},#{userIp},#{content},#{revertDate},#{rid},#{revertUserIp})
+    </insert>
+
+    <delete id="remove" parameterType="int">
+        delete from t_answer where commentId in (select id from t_comment where blogId=#{id})
+    </delete>
+</mapper>

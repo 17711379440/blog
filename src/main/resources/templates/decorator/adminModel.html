@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/x-icon" th:href="@{../../icons/favicon.ico}"/>
+    <link th:href="@{../../bootstrap-3.3.7-dist/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{../../bootstrap-3.3.7-dist/css/bootstrap-theme.min.css}" rel="stylesheet">
+    <link th:href="@{../../font-awesome-4.7.0-dist/css/font-awesome.min.css}" rel="stylesheet">
+    <!--<link th:href="@{../../jquery-easyui-1.5.4.2/themes/default/easyui.css}" rel="stylesheet">-->
+    <link th:href="@{../../jquery-easyui-1.5.4.2/themes/default/easyui.css}" rel="stylesheet">
+    <link th:href="@{../../jquery-easyui-1.5.4.2/themes/icon.css}" rel="stylesheet">
+
+    <link th:href="@{../../css/admin/adminModel.css}" rel="stylesheet">
+</head>
+<body class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'north',split:true,border:true" style="background-color: #E0ECFF;">
+        <p id="logo" class="text-left text-center"></p>
+        <p class="welcomeText">
+            欢迎您：<span style="font: 20px 微软雅黑 bold;" th:text="${session.loginUser.userName}"></span>
+        </p>
+    </div>
+    <!--版权部分-->
+    <div data-options="region:'south'" style="height:0;width:100%;line-height:50px;font-size: 14px;text-align: center">
+        Copyright © 2014-2018 liyongi.com 版权所有
+    </div>
+    <!--中间内容部分-->
+    <div data-options="region:'center'"  style="width:80%;padding:5px;background: rgb(205, 238, 238);" >
+        <div class="easyui-tabs" fit="true" border="false" id="tabs">
+            <div title="首页" data-options="iconCls:'icon-home'">
+                <div align="center" style="padding-top: 100px"><span  style="color: red; font-size: 10px"  >欢迎使用</span></div>
+            </div>
+          <!--  <div class="easyui-tabs" id='tt'  align="center" style="padding-top: 100px" th:include="this :: centent">
+                &lt;!&ndash;被装饰页面的内容&ndash;&gt;
+            </div>-->
+        </div>
+    </div>
+    <!--<div data-options="region:'east',split:true" title="East" style="width:100px;"></div>-->
+    <div data-options="region:'west',title:'导航菜单',split:true" style="width:18%;">
+        <div class="easyui-accordion" data-options="fit:true,border:false">
+            <div title="常用操作" data-options="selected:true,iconCls:'icon-item'" style="padding: 10px">
+                <a href="javascript:openTab('写博客','/admin/blog/writeBlog','icon-writeblog')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px">写博客</a>
+                <a href="javascript:openTab('评论审核','commentReview','icon-commentAudit')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-commentAudit'" style="width: 150px">评论审核</a>
+            </div>
+            <div title="博客管理"  data-options="iconCls:'icon-bkgl'" style="padding:10px;">
+                <a href="javascript:openTab('写博客','/admin/blog/writeBlog','icon-writeblog')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px;">写博客</a>
+                <a href="javascript:openTab('博客信息管理','/admin/blog/blogManager','icon-infoManager')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-infoManager'" style="width: 150px;">博客信息管理</a>
+            </div>
+            <div title="博客类别管理" data-options="iconCls:'icon-bklb'" style="padding:10px">
+                <a href="javascript:openTab('博客类别信息管理','/admin/blogType/blogTypeManager','icon-typeManager')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-typeManager'" style="width: 150px;">博客类别信息管理</a>
+            </div>
+            <div title="评论管理"  data-options="iconCls:'icon-plgl'" style="padding:10px">
+                <a href="javascript:openTab('评论审核','commentReview','icon-commentAudit')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-commentAudit'" style="width: 150px">评论审核</a>
+                <a href="javascript:openTab('评论信息管理','commentManage','icon-commentManager')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-commentManager'" style="width: 150px;">评论信息管理</a>
+            </div>
+            <div title="个人信息管理"  data-options="iconCls:'icon-grxx'" style="padding:10px">
+                <a href="javascript:openTab('修改个人信息','modifyInfo','icon-changeInfo')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-changeInfo'" style="width: 150px;">修改个人信息</a>
+            </div>
+            <div title="系统管理"  data-options="iconCls:'icon-system'" style="padding:10px">
+                <a href="javascript:openTab('友情链接管理','linkManage','icon-link')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">友情链接管理</a>
+                <a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
+                <a href="javascript:refreshSystem()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-refresh'" style="width: 150px;">刷新系统缓存</a>
+                <a href="javascript:logout()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-exit'" style="width: 150px;">安全退出</a>
+            </div>
+    </div>
+
+</div>
+    <script th:src="@{../../js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{../../bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{../../jquery-easyui-1.5.4.2/jquery.easyui.min.js}"></script>
+    <script th:src="@{../../jquery-easyui-1.5.4.2/easyui-lang-zh_CN.js}"></script>
+
+    <script th:src="@{../../js/admin/adminModel.js}"></script>
+    <script>
+        function openTab(title, url, iconCls) {
+            if ($('#tabs').tabs('exists', title)) {
+                $('#tabs').tabs('select', title);
+            } else {
+                //src="'+ url +'"
+                var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
+                $('#tabs').tabs('add', {
+                    title: title,
+                    iconCls: iconCls,
+                    content: content,
+                    closable: true
+                });
+            }
+        }
+    </script>
+</body>
+</html>

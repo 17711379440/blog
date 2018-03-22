@@ -1,0 +1,95 @@
+@import "home.css";
+a{
+    cursor: pointer;
+}
+.detailInfo{
+    border-bottom: 1px dashed;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+.detail h3{
+    text-align: center;
+}
+.page_turning{
+    margin-bottom: 10px;
+}
+/*评论信息*/
+.commentInfos .head,.publishComment .head{
+    margin-left: 15px;
+    margin-right: 15px;
+    border-bottom: 1px solid #E5E5E5;
+    height: 40px;
+    line-height: 40px;
+}
+.commentInfos .fa-commenting-o{
+    padding-bottom: 15px;
+}
+.commentInfos i{
+    font:16px bold;
+
+}
+
+.commentInfos,.publishComment{
+    width: 100%;
+    border: 1px solid #E5E5E5;
+}
+.commentInfo{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.no,.userIp,.revertUserIp{
+    font-weight: bold;
+}
+.no{
+    margin-right:20px ;
+}
+.commentInfos .commentInfo:not(:last-child){
+    border-bottom: 1px solid #E5E5E5;
+    padding-bottom: 7px;
+    margin-bottom: 9px;
+}
+.commentInfos .commentDate{
+    margin-left: 39px;
+    margin-right: 5px;
+}
+
+.createDate,.blogType{
+   margin-right: 100px;
+    margin-left: 10px;
+}
+/*发表评论*/
+.publishComment{
+   margin-top: 20px;
+}
+textarea{
+    width:96.5%;
+    height:120px;
+    margin:15px 0 15px 15px;
+    border-radius: 4px;
+    resize:vertical;
+}
+.publishComment .publishButton,.revertButton{
+    margin-right: 15px;
+    text-align:right;
+}
+.error{
+    border:2px solid #ff4b21;
+}
+.primitiveColor{
+    border:2px solid #175fff;
+}
+/*回复*/
+.revertUserIp{
+    margin-left:70px;
+    color:#F4842A;
+}
+.revertDate{
+    margin-left:140px;
+}
+.fa-edit{
+    vertical-align: middle;
+}
+.content img{
+    max-width: 80%;
+    text-align: center;
+}

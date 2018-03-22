@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.dao.CommentDao">
+    <resultMap id="list" type="Comment">
+        <id property="id" column="id"/>
+        <association property="blog" column="blogId" javaType="Blog">
+            <id property="id" column="id"/>
+        </association>
+    </resultMap>
+    <!--通过博文Id查询全部评论信息-->
+    <select id="getCommentsById" resultMap="list">
+      select  (@i:=@i+1)  as  no, t_comment.*   from   t_comment,(select   @i:=0) as  it  where blogId=#{id}
+    </select>
+
+    <!--添加评论-->
+    <insert id="add" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+        insert into t_comment values(null,#{userIp},#{blog.id},#{content},#{commentDate})
+    </insert>
+
+    <delete id="remove" parameterType="int">
+        delete from t_comment where blogId=#{id}
+    </delete>
+</mapper>

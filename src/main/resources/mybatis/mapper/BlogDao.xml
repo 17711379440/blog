@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.dao.BlogDao">
+    <resultMap id="list" type="Blog">
+        <id property="id" column="id"/>
+        <result property="readlingTimes" column="reading_times"/>
+        <result property="blogCount" column="blogCount"/>
+        <association property="blogType" column="typeId" javaType="BlogType">
+            <id property="id" column="typeId"/>
+        </association>
+        <!--一对多-->
+        <collection property="thumbnails" ofType="Thumbnail">
+            <id property="id" column="tid"/>
+        </collection>
+    </resultMap>
+    <sql id="formatDate">
+        date_format(createDate,'%Y年%m月')
+    </sql>
+
+    <!--查询所有博文-->
+    <select id="list" resultMap="list" >
+        select b.*,t_type.id typeId,t_type.name name,tt.id tid,tt.imagePath as imageSrc from t_blog b left join t_thumbnail tt ON b.id = tt.blogId inner join t_type on b.typeId = t_type.id
+       <where>
+           <if test="title != null and title !=''">
+               and title like concat('%',#{title},'%')
+           </if>
+           <if test="typeId != null">
+               and typeId=#{typeId}
+           </if>
+           <if test="createDateStr != null and createDateStr !=''">
+               and <include refid="formatDate"/>=#{createDateStr}
+           </if>
+       </where>
+        order by createDate desc
+    </select>
+
+    <!--查询所有发布日期-->
+    <select id="dateList" resultMap="list">
+        SELECT  <include refid="formatDate"/> as createDateStr,count(1) as blogCount FROM t_blog
+        GROUP BY  <include refid="formatDate"/>
+        ORDER BY  <include refid="formatDate"/> DESC;
+    </select>
+
+    <!--通过id查询单个博文对象-->
+    <select id="getBlogById" resultMap="list" parameterType="int">
+      select b.*,t.id typeId,t.name name from t_blog b inner join t_type t on b.typeId = t.id where b.id=#{id}
+    </select>
+
+    <!--更新游览书或者评论数-->
+    <update id="updateNum">
+        update t_blog
+        <set>
+            <if test="flag">reading_times=reading_times+1</if>
+            <if test="!flag">comments=comments+1</if>
+        </set>
+        where id =#{id}
+    </update>
+
+    <!--添加博客，并返回标识列-->
+    <insert id="add" parameterType="Blog" useGeneratedKeys="true" keyProperty="id">
+        insert into t_blog values(null,#{title},#{summary},now(),0,0,#{content},#{blogType.id},#{keyWord})
+    </insert>
+
+    <!--删除博客-->
+    <delete id="remove" parameterType="int">
+        delete from t_blog where id=#{id}
+    </delete>
+
+    <!--修改博客-->
+    <update id="update" parameterType="Blog">
+        update t_blog
+        <set>
+            <if test="title!=null and title!='' ">
+                title=#{title},
+            </if>
+            <if test="summary!=null and summary!='' ">
+                summary=#{summary},
+            </if>
+            <if test="content!=null and content!='' ">
+                content=#{content},
+            </if>
+            <if test="keyWord!=null and keyWord!='' ">
+                keyWord=#{keyWord},
+            </if>
+
+            <if test="blogType !=null ">
+                typeId=#{blogType.id}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>
